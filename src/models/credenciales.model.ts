@@ -13,12 +13,12 @@ export class Credenciales extends Model {
     required: true,
   })
   clave: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  rol: string;
+  /*
+    @property({
+      type: 'string',
+      required: true,
+    })
+    rol: string;*/
 
 
   constructor(data?: Partial<Credenciales>) {

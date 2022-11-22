@@ -1,5 +1,5 @@
-import {service} from '@loopback/core';
 import {authenticate} from '@loopback/authentication';
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -30,7 +30,7 @@ export class UsuarioController {
   ) { }
 
   @authenticate.skip()
-  @post("/identificarPersona", {
+  @post("/identificarPersona", {  //Iniciar sesión
     responses: {
       '200': {
         description: "Identificación de usuarios"
@@ -40,7 +40,7 @@ export class UsuarioController {
   async identificarPersona(
     @requestBody() credenciales: Credenciales
   ) {
-    let p = await this.servicioAutenticacion.identificarPersona(credenciales.usuario, credenciales.clave, credenciales.rol);
+    let p = await this.servicioAutenticacion.identificarPersona(credenciales.usuario, credenciales.clave);
     if (p) {
       let token = this.servicioAutenticacion.generarTokenJWT(p);
       return {
@@ -55,7 +55,8 @@ export class UsuarioController {
       throw new HttpErrors[401]("Datos invalidos - no existe");
     }
   }
-  
+
+  @authenticate.skip()
   @post('/usuarios')
   @response(200, {
     description: 'Usuario model instance',
@@ -140,6 +141,7 @@ export class UsuarioController {
     return this.usuarioRepository.updateAll(usuario, where);
   }
 
+  @authenticate.skip()
   @get('/usuarios/{id}')
   @response(200, {
     description: 'Usuario model instance',
@@ -174,6 +176,7 @@ export class UsuarioController {
     await this.usuarioRepository.updateById(id, usuario);
   }
 
+  @authenticate.skip()
   @put('/usuarios/{id}')
   @response(204, {
     description: 'Usuario PUT success',

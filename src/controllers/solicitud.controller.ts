@@ -1,32 +1,29 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Solicitud} from '../models';
 import {SolicitudRepository} from '../repositories';
 
+@authenticate("admin")
 export class SolicitudController {
   constructor(
     @repository(SolicitudRepository)
-    public solicitudRepository : SolicitudRepository,
-  ) {}
+    public solicitudRepository: SolicitudRepository,
+  ) { }
 
-  @post('/solicituds')
+  @authenticate.skip()
+  @post('/solicitudes')
   @response(200, {
     description: 'Solicitud model instance',
     content: {'application/json': {schema: getModelSchemaRef(Solicitud)}},
@@ -58,6 +55,7 @@ export class SolicitudController {
     return this.solicitudRepository.count(where);
   }
 
+  @authenticate.skip()
   @get('/solicituds')
   @response(200, {
     description: 'Array of Solicitud model instances',
@@ -95,6 +93,7 @@ export class SolicitudController {
     return this.solicitudRepository.updateAll(solicitud, where);
   }
 
+  @authenticate.skip()
   @get('/solicituds/{id}')
   @response(200, {
     description: 'Solicitud model instance',
@@ -129,6 +128,7 @@ export class SolicitudController {
     await this.solicitudRepository.updateById(id, solicitud);
   }
 
+  @authenticate.skip()
   @put('/solicituds/{id}')
   @response(204, {
     description: 'Solicitud PUT success',

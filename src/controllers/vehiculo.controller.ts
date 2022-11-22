@@ -15,14 +15,14 @@ import {
 import {Vehiculo} from '../models';
 import {VehiculoRepository} from '../repositories';
 
-@authenticate("crud")
+@authenticate("admin", "asesor")
 export class VehiculoController {
   constructor(
     @repository(VehiculoRepository)
     public vehiculoRepository: VehiculoRepository,
   ) { }
 
-  @post('/vehiculos')
+  @post('/vehiculos') //Crear vehículos
   @response(200, {
     description: 'Vehiculo model instance',
     content: {'application/json': {schema: getModelSchemaRef(Vehiculo)}},
@@ -55,7 +55,7 @@ export class VehiculoController {
   }
 
   @authenticate.skip()
-  @get('/vehiculos')
+  @get('/vehiculos') //Consultar vehículos
   @response(200, {
     description: 'Array of Vehiculo model instances',
     content: {
@@ -127,7 +127,7 @@ export class VehiculoController {
     await this.vehiculoRepository.updateById(id, vehiculo);
   }
 
-  @put('/vehiculos/{id}')
+  @put('/vehiculos/{id}') //Actualizar vehículo
   @response(204, {
     description: 'Vehiculo PUT success',
   })
@@ -138,7 +138,8 @@ export class VehiculoController {
     await this.vehiculoRepository.replaceById(id, vehiculo);
   }
 
-  @del('/vehiculos/{id}')
+  @authenticate("admin")
+  @del('/vehiculos/{id}')  //Eliminar vehículos
   @response(204, {
     description: 'Vehiculo DELETE success',
   })

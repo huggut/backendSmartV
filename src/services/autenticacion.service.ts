@@ -23,7 +23,7 @@ export class AutenticacionService {
   }
 
   //Autenticacion
-  identificarPersona(usuario: string, clave: string, rol: string) {
+  identificarPersona(usuario: string, clave: string) {
     try {
       const p = this.usuarioRepository.findOne({where: {correo: usuario, clave: clave}});
       if (p) {
@@ -47,7 +47,7 @@ export class AutenticacionService {
     return token;
   }
 
-  ValidarTokenJWT(token: string){
+  ValidarTokenJWT(token: string) {
     try {
       let datos = jwt.verify(token, LLaves.claveJWT);
       return datos;
