@@ -22,7 +22,8 @@ export class VehiculoController {
     public vehiculoRepository: VehiculoRepository,
   ) { }
 
-  @post('/vehiculos') //Crear vehículos
+  @authenticate.skip()
+  @post('/vehiculos')
   @response(200, {
     description: 'Vehiculo model instance',
     content: {'application/json': {schema: getModelSchemaRef(Vehiculo)}},

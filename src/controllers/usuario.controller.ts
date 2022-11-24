@@ -82,9 +82,15 @@ export class UsuarioController {
 
     let destino = usuario.correo;
     let asunto = 'registro de usuario en SmartVehicle';
-    let contenido = `Hola ${usuario.nombres}, usted ha sido registrado en Smart Vehicle y su usuario es: ${usuario.correo}, su clave es: ${clave}`;
+    let contenido = `Hola ${usuario.nombres}, usted ha sido registrado en Smart Vehicle. Usuario: ${usuario.correo}, clave: ${clave}`;
+    let telefono = usuario.celular;
 
     fetch(`${LLaves.urlServicioNotificaciones}/envio-correo?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}`)
+      .then((data: unknown) => {
+        console.log(data);
+      })
+
+      fetch(`${LLaves.urlServicioNotificaciones}/sms?mensaje=${contenido}&telefono=${telefono}`)
       .then((data: unknown) => {
         console.log(data);
       })

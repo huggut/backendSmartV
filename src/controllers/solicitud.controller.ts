@@ -44,7 +44,7 @@ export class SolicitudController {
     return this.solicitudRepository.create(solicitud);
   }
 
-  @get('/solicituds/count')
+  @get('/solicitudes/count')
   @response(200, {
     description: 'Solicitud model count',
     content: {'application/json': {schema: CountSchema}},
@@ -56,7 +56,7 @@ export class SolicitudController {
   }
 
   @authenticate.skip()
-  @get('/solicituds')
+  @get('/solicitudes')
   @response(200, {
     description: 'Array of Solicitud model instances',
     content: {
@@ -74,7 +74,7 @@ export class SolicitudController {
     return this.solicitudRepository.find(filter);
   }
 
-  @patch('/solicituds')
+  @patch('/solicitudes')
   @response(200, {
     description: 'Solicitud PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -94,7 +94,7 @@ export class SolicitudController {
   }
 
   @authenticate.skip()
-  @get('/solicituds/{id}')
+  @get('/solicitudes/{id}')
   @response(200, {
     description: 'Solicitud model instance',
     content: {
@@ -110,7 +110,7 @@ export class SolicitudController {
     return this.solicitudRepository.findById(id, filter);
   }
 
-  @patch('/solicituds/{id}')
+  @patch('/solicitudes/{id}')
   @response(204, {
     description: 'Solicitud PATCH success',
   })
@@ -129,7 +129,7 @@ export class SolicitudController {
   }
 
   @authenticate.skip()
-  @put('/solicituds/{id}')
+  @put('/solicitudes/{id}')
   @response(204, {
     description: 'Solicitud PUT success',
   })
@@ -140,7 +140,7 @@ export class SolicitudController {
     await this.solicitudRepository.replaceById(id, solicitud);
   }
 
-  @del('/solicituds/{id}')
+  @del('/solicitudes/{id}')
   @response(204, {
     description: 'Solicitud DELETE success',
   })
