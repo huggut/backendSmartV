@@ -47,12 +47,41 @@ export class UsuarioController {
         datos: {
           nombre: p.nombres,
           correo: p.correo,
-          id: p.id
+          id: p.id,
+          rol: p.rol
         },
         tk: token
       }
     } else {
       throw new HttpErrors[401]("Datos invalidos - no existe");
+    }
+  }
+
+
+  @authenticate.skip()
+  @post("/cambiarClave", {  
+    responses: {
+      '200': {
+        description: "Cambiar clave de usuario"
+      }
+    }
+  })
+  async cambiarClave(
+    @requestBody() credenciales: Credenciales
+  ) {
+    let p = await this.servicioAutenticacion.identificarPersona(credenciales.usuario, credenciales.clave);
+    if (p) {
+      let token = this.servicioAutenticacion.generarTokenJWT(p);
+      return {
+        datos: {
+          nombre: p.nombres,
+          correo: p.correo,
+          id: p.id
+        },
+        tk: token
+      }
+    } else {
+      throw new HttpErrors[401]("Contraseña incorrecta");
     }
   }
 
